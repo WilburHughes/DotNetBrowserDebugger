@@ -51,7 +51,7 @@
 			this.browserView1.Location = new System.Drawing.Point(0, 24);
 			this.browserView1.Margin = new System.Windows.Forms.Padding(2);
 			this.browserView1.Name = "browserView1";
-			this.browserView1.Size = new System.Drawing.Size(584, 736);
+			this.browserView1.Size = new System.Drawing.Size(786, 537);
 			this.browserView1.TabIndex = 1;
 			// 
 			// labelPort
@@ -77,7 +77,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(584, 761);
+			this.ClientSize = new System.Drawing.Size(784, 561);
 			this.Controls.Add(this.buttonStart);
 			this.Controls.Add(this.labelPort);
 			this.Controls.Add(this.browserView1);
