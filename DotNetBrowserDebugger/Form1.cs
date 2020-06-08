@@ -7,10 +7,20 @@ namespace ESRI.ArcGIS.Mapping.OfficeIntegration.Core
 {
     public partial class Form1 : Form
     {
+        const string defaultPort = "4500";
         IEngine Engine;
         IBrowser browser;
+
         public Form1()
         {
+            InitializeDotNetBrowser(defaultPort);
+            InitializeComponent();
+            textBoxPort.Text = defaultPort;
+            textBoxPort.SelectionStart = 0;
+        }
+
+		public bool InitializeDotNetBrowser(string port)
+		{
             Engine = createEngine(@"C:\DEV\testing\dotnetbrowser\DotNetBrowserDebugger\cache");
             Task.Run(() =>
                 Engine.CreateBrowser()
@@ -18,12 +28,14 @@ namespace ESRI.ArcGIS.Mapping.OfficeIntegration.Core
             {
                 browser = t.Result;
                 browserView1.InitializeFrom(browser);
-                browser.Navigation.LoadUrl("http://localhost:4500");
+                //browser.Navigation.LoadUrl("http://localhost:9222");
+                browser.Navigation.LoadUrl(string.Format("{0}:{1}", "http://localhost", port));
             }, TaskScheduler.FromCurrentSynchronizationContext());
-            InitializeComponent();
+
+            return true;
         }
 
-        public static IEngine createEngine(string userdatadir)
+		public static IEngine createEngine(string userdatadir)
         {
             IEngine engine = EngineFactory.Create(new EngineOptions.Builder
             {
@@ -39,6 +51,20 @@ namespace ESRI.ArcGIS.Mapping.OfficeIntegration.Core
         {
             Engine?.Dispose();
             browser?.Dispose();
+        }
+
+        private void buttonStart_Click(object sender, System.EventArgs e)
+		{
+            if (textBoxPort.Text.Equals("")) return;
+            int x = 0;
+            if (int.TryParse(textBoxPort.Text, out x))
+			{
+                buttonStart.Visible = false;
+                textBoxPort.Visible = false;
+                labelPort.Visible = false;
+                Form1_FormClosing(null, null);
+                InitializeDotNetBrowser(textBoxPort.Text);
+            }
         }
     }
 }
